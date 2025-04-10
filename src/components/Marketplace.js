@@ -71,12 +71,15 @@ export default function Marketplace() {
         let meta = await axios.get(tokenURI);
         meta = meta.data;
 
+        console.log("Meta - ", meta)
+
         let price = ethers.utils.formatUnits(i.price.toString(), "ether");
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
+          audio: meta.audio,
           image: meta.image,
           name: meta.name,
           description: meta.description,
@@ -90,6 +93,8 @@ export default function Marketplace() {
   }
 
   if (!dataFetched) getAllNFTs();
+
+  console.log("Data - ", data);
 
   return (
     <div className="min-h-screen bg-darkblue text-white font-poppins">

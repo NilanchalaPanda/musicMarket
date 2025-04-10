@@ -1,5 +1,4 @@
-import axie from "../tile.jpeg";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GetIpfsUrlFromPinata } from "../utils";
 
 function NFTTile(data) {
@@ -7,14 +6,16 @@ function NFTTile(data) {
     pathname: "/nftPage/" + data.data.tokenId,
   };
 
-  const IPFSUrl = GetIpfsUrlFromPinata(data.data.image);
+  const IPFSImageUrl = GetIpfsUrlFromPinata(data.data.image);
+
+  const IPFSAudioUrl = GetIpfsUrlFromPinata(data.data.audio);
 
   return (
     <Link className="w-96" to={newTo}>
       <div className="mt-5 flex flex-col items-center rounded-2xl shadow-2xl border border-[#1a1f2e] bg-[#0d111c] transition-transform hover:scale-105 hover:shadow-purple-500/30">
         {/* Cover Image */}
         <img
-          src={IPFSUrl}
+          src={IPFSImageUrl}
           alt="NFT Cover"
           className="w-full h-60 object-cover rounded-t-2xl"
         />
@@ -25,16 +26,16 @@ function NFTTile(data) {
           <strong className="text-lg sm:text-xl text-purple-400 text-center">
             {data.data.name}
           </strong>
-
-          {/* Description */}
           <p className="text-sm text-center text-gray-300">
-            {data.data.description}
+            {data.data.description.length > 90
+              ? data.data.description.substring(0, 90) + "..."
+              : data.data.description}
           </p>
 
           {/* Audio Player */}
           <audio
             controls
-            src={data.data.audioUrl}
+            src={IPFSAudioUrl}
             className="w-full mt-2 rounded-md bg-[#1a1f2e] outline-none focus:ring-2 focus:ring-purple-500"
           >
             Your browser does not support the audio element.

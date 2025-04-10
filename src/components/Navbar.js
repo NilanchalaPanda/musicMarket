@@ -85,7 +85,7 @@ function Navbar() {
               to={link.path}
               className={`transition-all duration-200 hover:text-purple-400 ${
                 location.pathname === link.path
-                  ? "border-b-2 border-purple-500 pb-1"
+                  ? "text-purple-500"
                   : ""
               }`}
             >

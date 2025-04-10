@@ -8,7 +8,8 @@ export default function Marketplace() {
       name: "NFT#1",
       description: "Alchemy's First NFT",
       website: "http://axieinfinity.io",
-      audioUrl: "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
+      audioUrl:
+        "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
       image:
         "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
       price: "0.03ETH",
@@ -19,7 +20,8 @@ export default function Marketplace() {
       name: "NFT#2",
       description: "Alchemy's Second NFT",
       website: "http://axieinfinity.io",
-      audioUrl: "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
+      audioUrl:
+        "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
       image:
         "https://gateway.pinata.cloud/ipfs/QmdhoL9K8my2vi3fej97foiqGmJ389SMs55oC5EdkrxF2M",
       price: "0.03ETH",
@@ -30,7 +32,8 @@ export default function Marketplace() {
       name: "NFT#3",
       description: "Alchemy's Third NFT",
       website: "http://axieinfinity.io",
-      audioUrl: "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
+      audioUrl:
+        "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
       image:
         "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
       price: "0.03ETH",
@@ -47,7 +50,7 @@ export default function Marketplace() {
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-500">
           Top NFTs
         </h1>
-        <div className="w-full flex flex-col md:flex-row justify-center gap-6 mt-10">
+        <div className="w-full flex flex-col md:flex-row justify-center md:gap-y-6 md:gap-x-10 mt-10">
           {sampleData.map((value, index) => (
             <NFTTile data={value} key={index} />
           ))}

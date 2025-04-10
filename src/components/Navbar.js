@@ -20,10 +20,10 @@ function Navbar() {
 
   async function connectWebsite() {
     const chainId = await window.ethereum.request({ method: "eth_chainId" });
-    if (chainId !== "0x5") {
+    if (chainId !== "0xa") {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x5" }],
+        params: [{ chainId: "0xa" }],
       });
     }
     await window.ethereum.request({ method: "eth_requestAccounts" });

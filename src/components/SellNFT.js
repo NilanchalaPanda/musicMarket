@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from "../Marketplace.json";
-import { useLocation } from "react-router";
 import { ethers } from "ethers";
 
 export default function SellNFT() {
@@ -11,23 +10,37 @@ export default function SellNFT() {
     description: "",
     price: "",
   });
-  const [fileURL, setFileURL] = useState(null);
+  const [audioFileURL, setAudioFileURL] = useState(null);
+  const [imageFileURL, setImageFileURL] = useState(null);
   const [message, updateMessage] = useState("");
-  const location = useLocation();
 
   // Upload audio file to IPFS (Pinata)
-  const onFileChange = async (e) => {
+  const onAudioFileChange = async (e) => {
     const file = e.target.files[0];
 
     try {
       const response = await uploadFileToIPFS(file);
       if (response.success) {
         console.log("✅ Audio uploaded to Pinata:", response.pinataURL);
-        setFileURL(response.pinataURL);
-        console.log("File URL - ", response.pinataURL);
+        setAudioFileURL(response.pinataURL);
       }
     } catch (err) {
       console.error("❌ Error uploading audio to Pinata:", err);
+    }
+  };
+
+  // Upload audio file to IPFS (Pinata)
+  const onImageFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    try {
+      const response = await uploadFileToIPFS(file);
+      if (response.success) {
+        console.log("✅ Image uploaded to Pinata:", response.pinataURL);
+        setImageFileURL(response.pinataURL);
+      }
+    } catch (err) {
+      console.error("❌ Error uploading image to Pinata:", err);
     }
   };
 
@@ -35,7 +48,7 @@ export default function SellNFT() {
   const uploadMetadataToIPFS = async () => {
     const { name, description, price } = formParams;
 
-    if (!name || !description || !price || !fileURL) {
+    if (!name || !description || !price || !audioFileURL) {
       alert("Please fill all fields and upload an audio file.");
       return null;
     }
@@ -44,7 +57,8 @@ export default function SellNFT() {
       name,
       description,
       price,
-      audio: fileURL, // changed from image to audio for clarity
+      image: imageFileURL,
+      audio: audioFileURL,
     };
 
     try {
@@ -97,7 +111,8 @@ export default function SellNFT() {
         description: "",
         price: "",
       });
-      setFileURL(null);
+      setAudioFileURL(null);
+      setImageFileURL(null);
 
       window.location.replace("/");
     } catch (err) {
@@ -168,25 +183,39 @@ export default function SellNFT() {
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-purple-400 mb-2">
-              Upload Audio File
-            </label>
-            <input
-              type="file"
-              accept="audio/*"
-              onChange={onFileChange}
-              className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-            />
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-purple-400 mb-2">
+                Upload AUDIO File
+              </label>
+              <input
+                type="file"
+                accept="audio/*"
+                onChange={onAudioFileChange}
+                className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+              />
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-purple-400 mb-2">
+                Upload IMAGE File
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onImageFileChange}
+                className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+              />
+            </div>
           </div>
 
           <div className="text-red-500 text-center mb-2">{message}</div>
 
           <button
-            disabled={!fileURL}
+            disabled={!audioFileURL || !imageFileURL}
             onClick={listNFT}
             className={`font-bold w-full rounded-md p-3 mt-4 shadow-md transition-all duration-300 ${
-              !fileURL
+              !audioFileURL || !imageFileURL
                 ? "bg-purple-500/60 text-white cursor-not-allowed"
                 : "bg-purple-600 hover:bg-purple-700 text-white"
             }`}

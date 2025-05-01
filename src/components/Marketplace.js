@@ -6,45 +6,6 @@ import { GetIpfsUrlFromPinata } from "../utils";
 import axios from "axios";
 
 export default function Marketplace() {
-  // const sampleData = [
-  //   {
-  //     name: "NFT#1",
-  //     description: "Alchemy's First NFT",
-  //     website: "http://axieinfinity.io",
-  //     audioUrl:
-  //       "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
-  //     image:
-  //       "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
-  //     price: "0.03ETH",
-  //     currentlySelling: "True",
-  //     address: "0xe81Bf5A757CB4f7F82a2F23b1e59bE45c33c5b13",
-  //   },
-  //   {
-  //     name: "NFT#2",
-  //     description: "Alchemy's Second NFT",
-  //     website: "http://axieinfinity.io",
-  //     audioUrl:
-  //       "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
-  //     image:
-  //       "https://gateway.pinata.cloud/ipfs/QmdhoL9K8my2vi3fej97foiqGmJ389SMs55oC5EdkrxF2M",
-  //     price: "0.03ETH",
-  //     currentlySelling: "True",
-  //     address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
-  //   },
-  //   {
-  //     name: "NFT#3",
-  //     description: "Alchemy's Third NFT",
-  //     website: "http://axieinfinity.io",
-  //     audioUrl:
-  //       "https://gateway.pinata.cloud/ipfs/QmNVnJoZEB4rSyEWZCmRsqgcMTMzGhpsBJyRauk3Q421Jx",
-  //     image:
-  //       "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
-  //     price: "0.03ETH",
-  //     currentlySelling: "True",
-  //     address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
-  //   },
-  // ];
-
   const [data, updateData] = useState([]);
   const [dataFetched, updateFetched] = useState(false);
 
@@ -71,7 +32,7 @@ export default function Marketplace() {
         let meta = await axios.get(tokenURI);
         meta = meta.data;
 
-        console.log("Meta - ", meta)
+        console.log("Meta - ", meta);
 
         let price = ethers.utils.formatUnits(i.price.toString(), "ether");
         let item = {
@@ -105,7 +66,9 @@ export default function Marketplace() {
         </h1>
         <div className="w-full flex flex-col md:flex-row justify-center md:gap-y-6 md:gap-x-10 mt-10">
           {data &&
-            data.map((value, index) => <NFTTile data={value} key={index} />)}
+            data
+              .filter((item) => item.audio !== undefined && item.audio) // Filter out items without audio
+              .map((value, index) => <NFTTile data={value} key={index} />)}
         </div>
       </div>
     </div>

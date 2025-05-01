@@ -64,11 +64,22 @@ export default function Marketplace() {
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-500">
           Top NFTs
         </h1>
-        <div className="w-full flex flex-col md:flex-row justify-center md:gap-y-6 md:gap-x-10 mt-10">
+        <div className="w-full flex flex-col items-center my-10">
           {data &&
             data
-              .filter((item) => item.audio !== undefined && item.audio) // Filter out items without audio
-              .map((value, index) => <NFTTile data={value} key={index} />)}
+              .filter((item) => item.audio !== undefined && item.audio)
+              .reduce((rows, item, index) => {
+                if (index % 3 === 0) rows.push([]);
+                rows[rows.length - 1].push(item);
+                return rows;
+              }, [])
+              .map((row, rowIndex) => (
+                <div key={rowIndex} className="flex justify-center mb-6">
+                  {row.map((value, index) => (
+                    <NFTTile data={value} key={index} />
+                  ))}
+                </div>
+              ))}
         </div>
       </div>
     </div>

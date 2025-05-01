@@ -11,7 +11,7 @@ function NFTTile(data) {
   const IPFSAudioUrl = GetIpfsUrlFromPinata(data.data.audio);
 
   return (
-    <Link className="w-96" to={newTo}>
+    <Link className="mx-10 w-96" to={newTo}>
       <div className="mt-5 flex flex-col items-center rounded-2xl shadow-2xl border border-[#1a1f2e] bg-[#0d111c] transition-transform hover:scale-105 hover:shadow-purple-500/30">
         {/* Cover Image */}
         <img

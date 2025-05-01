@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="container">
+    <div className="w-full overflow-x-hidden">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Marketplace />} />

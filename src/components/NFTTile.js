@@ -1,0 +1,100 @@
+import { Link } from "react-router-dom";
+import { GetIpfsUrlFromPinata } from "../utils";
+
+// function NFTTile(data) {
+//   const newTo = {
+//     pathname: "/nftPage/" + data.data.tokenId,
+//   };
+
+//   const IPFSImageUrl = GetIpfsUrlFromPinata(data.data.image);
+
+//   const IPFSAudioUrl = GetIpfsUrlFromPinata(data.data.audio);
+
+//   return (
+//     <Link className="w-96" to={newTo}>
+//       <div className="mt-5 flex flex-col items-center rounded-2xl shadow-2xl border border-[#1a1f2e] bg-[#0d111c] transition-transform hover:scale-105 hover:shadow-purple-500/30">
+//         {/* Cover Image */}
+//         <img
+//           src={IPFSImageUrl}
+//           alt="NFT Cover"
+//           className="w-full h-60 object-cover rounded-t-2xl"
+//         />
+
+//         {/* Audio & Info */}
+//         <div className="text-white w-full p-4 bg-blue-900/30 rounded-b-2xl flex flex-col gap-3">
+//           {/* Name */}
+//           <strong className="text-lg sm:text-xl text-purple-400 text-center">
+//             {data.data.name}
+//           </strong>
+//           <p className="text-sm text-center text-gray-300">
+//             {data.data.description.length > 90
+//               ? data.data.description.substring(0, 90) + "..."
+//               : data.data.description}
+//           </p>
+
+//           {/* Audio Player */}
+//           <audio
+//             controls
+//             src={IPFSAudioUrl}
+//             className="w-full mt-2 rounded-md bg-[#1a1f2e] outline-none focus:ring-2 focus:ring-purple-500"
+//           >
+//             Your browser does not support the audio element.
+//           </audio>
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// }
+
+// export default NFTTile;
+
+//Changed code @Nilanchala
+function NFTTile({ data }) {
+  if (!data) return null;
+
+  const { tokenId, image, audio, name, description } = data;
+
+  const newTo = {
+    pathname: "/nftPage/" + tokenId,
+  };
+
+  const IPFSImageUrl = GetIpfsUrlFromPinata(image);
+  const IPFSAudioUrl = GetIpfsUrlFromPinata(audio);
+
+  return (
+    <Link className="w-full max-w-2xl" to={newTo}>
+      <div className="mt-5 flex flex-col items-center rounded-2xl shadow-2xl border border-[#1a1f2e] bg-[#0d111c] transition-transform hover:scale-105 hover:shadow-purple-500/30">
+        <img
+          src={IPFSImageUrl || "https://via.placeholder.com/300"}
+          alt="NFT Cover"
+          className="w-full h-60 object-cover rounded-t-2xl"
+        />
+        <div className="text-white w-full p-4 bg-blue-900/30 rounded-b-2xl flex flex-col gap-3">
+          <strong className="text-lg sm:text-xl text-purple-400 text-center">
+            {name || "Untitled NFT"}
+          </strong>
+          <p className="text-sm text-center text-gray-300">
+            {description
+              ? description.length > 90
+                ? description.substring(0, 90) + "..."
+                : description
+              : "No description available."}
+          </p>
+          {IPFSAudioUrl ? (
+            <audio
+              controls
+              src={IPFSAudioUrl}
+              className="w-full mt-2 rounded-md bg-[#1a1f2e] outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              Your browser does not support the audio element.
+            </audio>
+          ) : (
+            <p className="text-sm text-center text-gray-500">No audio available.</p>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default NFTTile;
